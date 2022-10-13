@@ -47,140 +47,144 @@ class Torrent {
     }
 }
 
-class Category {
-
-    /**
-     * 
-     * @param { number } value 
-     * @param { ?Array<Category> } subCategories 
-     */
-    constructor(value, subCategories) {
-        this._value = value;
-        /**
-         * @type { Array<Category> }
-         * @readonly
-         */
-        this.subCategories = subCategories;
-    }
-}
-
-/**
- * @enum { Category }
- */
+/** @enum { number } */
 const Categories = Object.freeze({
-    ALL: new Category(0),
-    FILM_VIDEO: new Category(2145, {
-        ALL: new Category(0),
-        ANIMATION: new Category(2178),
-        ANIMATION_SERIES: new Category(2179),
-        CONCERT: new Category(2180),
-        DOCUMENTARY: new Category(2181),
-        TV_SHOW: new Category(2182),
-        FILM: new Category(2183),
-        TV_SERIES: new Category(2184),
-        SHOW: new Category(2185),
-        SPORT: new Category(2186),
-        VIDEO_CLIP: new Category(2187)
-    }),
-    AUDIO: new Category(2139, {
-        ALL: new Category(0),
-        KARAOKE: new Category(2147),
-        MUSIC: new Category(2148),
-        RADIO_PODCAST: new Category(2150),
-        SAMPLE: new Category(2149)
-    }),
-    SOFTWARE: new Category(2144, {
-        ALL: new Category(0),
-        OTHER: new Category(2177),
-        FORMATION: new Category(2176),
-        LINUX: new Category(2171),
-        MACOS: new Category(2172),
-        SMARTPHONE: new Category(2174),
-        TABLET: new Category(2175),
-        WINDOWS: new Category(2173)
-    }),
-    GAME: new Category(2142, {
-        ALL: new Category(0),
-        OTHER: new Category(2167),
-        LINUX: new Category(2159),
-        MACOS: new Category(2160),
-        MICROSOFT: new Category(2162),
-        NINTENDO: new Category(2163),
-        SMARTPHONE: new Category(2165),
-        SNOY: new Category(2164),
-        TABLET: new Category(2166),
-        WINDOWS: new Category(2161)
-    }),
-    EBOOK: new Category(2140, {
-        ALL: new Category(0),
-        AUDIO: new Category(2151),
-        COMIC_STRIP: new Category(2152),
-        COMICS: new Category(2153),
-        BOOKS: new Category(2154),
-        MANGA: new Category(2155),
-        PRESS: new Category(2156)
-    }),
-    EMULATION: new Category(2141, {
-        ALL: new Category(0),
-        EMULATORS: new Category(2157),
-        ROMS: new Category(2158)
-    }),
-    GPS: new Category(2143, {
-        ALL: new Category(0),
-        APP: new Category(2168),
-        MAP: new Category(2169),
-        OTHER: new Category(2170)
-    })
+    ALL: 0,
+    FILM_VIDEO: 2145,
+    AUDIO: 2139,
+    SOFTWARE: 2144,
+    GAME: 2142,
+    EBOOK: 2140, 
+    EMULATION: 2141,
+    GPS: 2143
 });
 
+/**
+ * @enum { Object<String, number> }
+ */
 
-class YggTorrent {
-    
-    static BASE_URL = "https://www5.yggtorrent.fi";
+const SubCategories = Object.freeze({
+    /** @enum { number } */
+    FILM_VIDEO: {
+        ALL: 0,
+        ANIMATION: 2178,
+        ANIMATION_SERIES: 2179,
+        CONCERT: 2180,
+        DOCUMENTARY: 2181,
+        TV_SHOW: 2182,
+        FILM: 2183,
+        TV_SERIES: 2184,
+        SHOW: 2185,
+        SPORT: 2186,
+        VIDEO_CLIP: 2187
+    },
+    /** @enum { number } */
+    AUDIO: {
+        ALL: 0,
+        KARAOKE: 2147,
+        MUSIC: 2148,
+        RADIO_PODCAST: 2150,
+        SAMPLE: 2149
+    },
+    /** @enum { number } */
+    SOFTWARE: {
+        ALL: 0,
+        OTHER: 2177,
+        FORMATION: 2176,
+        LINUX: 2171,
+        MACOS: 2172,
+        SMARTPHONE: 2174,
+        TABLET: 2175,
+        WINDOWS: 2173
+    },
+    /** @enum { number } */
+    GAME: {
+        ALL: 0,
+        OTHER: 2167,
+        LINUX: 2159,
+        MACOS: 2160,
+        MICROSOFT: 2162,
+        NINTENDO: 2163,
+        SMARTPHONE: 2165,
+        SNOY: 2164,
+        TABLET: 2166,
+        WINDOWS: 2161
+    },
+    /** @enum { number } */
+    EBOOK: {
+        ALL: 0,
+        AUDIO: 2151,
+        COMIC_STRIP: 2152,
+        COMICS: 2153,
+        BOOKS: 2154,
+        MANGA: 2155,
+        PRESS: 2156
+    },
+    /** @enum { number } */
+    EMULATION: {
+        ALL: 0,
+        EMULATORS: 2157,
+        ROMS: 2158
+    },
+    /** @enum { number } */
+    GPS: {
+        ALL: 0,
+        APP: 2168,
+        MAP: 2169,
+        OTHER: 2170
+    }
+})
 
-    /**
-     * @enum { String }
-     */
-    static sortBy = Object.freeze({
+/**
+ * @enum { String }
+*/
+const SortBy = Object.freeze({
     NAME: "name",
     PUBLISH_DATE: "publish_date",
     SIZE: "size",
     COMPLETED: "completed",
     SEED: "seed",
     LEECH: "leech"
-    })
+})
 
-    /**
-     * @enum { String }
-     */
-    static sortOrder = Object.freeze({
+/**
+ * @enum { String }
+ */
+const SortOrder = Object.freeze({
     ASCENDING: "asc",
     DESCENDING: "desc"
-    })
+})
+
+class YggTorrent {
+    
+    static BASE_URL = "https://www5.yggtorrent.fi";
 
     /**
      * @param {Object} params
      * @param {String} params.url The YggTorrent base URL. Defaults to YggTorrent.BASE_URL = https://www5.yggtorrent.fi
      */
     constructor(params) {
-        this.url = params.url || YggTorrent.BASE_URL;
+        /**
+         * @type { String }
+         * @readonly
+         */
+        this.url = (params  || {}).url || YggTorrent.BASE_URL;
         this.url = this.url.endsWith("/") ? this.url.slice(0, this.url.length - 1) : this.url;
-        this.#initializeBrowser();
     }
 
     /**
      * @param {String} username 
      * @param {String} password
-     * @returns {Promise<null>}
+     * @returns { Promise<void> }
      */
     async login(username, password) {
-        await this.page.goto(this.url, {
+        await this._page.goto(this.url, {
             networkIdleTimeout: 1000,
             waitUntil: 'networkidle2',
             timeout: 3000000
         });
-        await this.page.click('a[id="register"]');
-        let form = await this.page.$('form[id="user-login"]');
+        await this._page.click('a[id="register"]');
+        let form = await this._page.$('form[id="user-login"]');
         let login_field = await form.$('input[name="id"]');
         let password_field = await form.$('input[name="pass"]');
         let submit_button = await form.$('button[type="submit"]');
@@ -193,42 +197,42 @@ class YggTorrent {
      * @returns { Promise<boolean> }
      */
     async isLoggedIn() {
-        if (this.page.url == this.url) {
-            await this.page.goto(this.url, {
+        if (this._page.url == this.url) {
+            await this._page.goto(this.url, {
                 networkIdleTimeout: 1000,
                 waitUntil: 'networkidle2',
                 timeout: 3000000
             });
         }
         // Check for button presence
-        return await this.page.$('a[id="panel-btn"]') != null;
+        return await this._page.$('a[id="panel-btn"]') != null;
     }
 
     /**
-     * @param {Object} query
-     * @param {String} query.name
+     * @param { Object } query
+     * @param { String } query.name
      * @param { Category } query.category
      * @param { Category } query.sub_category
-     * @param {String} query.description
-     * @param {String} query.file
-     * @param {String} query.uploader
-     * @param {sortBy} query.sort
-     * @param {sortOrder} query.order
-     * @param {String} query.page
+     * @param { String } query.description
+     * @param { String } query.file
+     * @param { String } query.uploader
+     * @param { SortBy } query.sort
+     * @param { SortOrder } query.order
+     * @param { String } query.page
      * 
-     * @return {Promise<Array<Torrent>>}
+     * @returns { Promise<Array<Torrent>> }
      */
     async search(query) {
-        let searchUrl = this.url + `/engine/search?name=${query.name || ""}&description=${query.description || ""}&file=${query.file || ""}&uploader=${query.uploader || ""}&category=${query.category ? query.category._value : ''}&sub_category=${query.sub_category ? query.sub_category._value : ''}&sort=${query.sort || ""}&order=${query.order || ""}&page=${query.page || ""}&do=search`;
+        let searchUrl = this.url + `/engine/search?name=${query.name || ""}&description=${query.description || ""}&file=${query.file || ""}&uploader=${query.uploader || ""}&category=${query.category || ''}&sub_category=${query.sub_category || ''}&sort=${query.sort || ""}&order=${query.order || ""}&page=${query.page || ""}&do=search`;
 
-        await this.page.goto(searchUrl, {
+        await this._page.goto(searchUrl, {
             networkIdleTimeout: 1000,
             waitUntil: 'networkidle2',
             timeout: 3000000
         });
         // Parse results
         let results = [];
-        let torrentSection = await this.page.$('section[id="#torrents"]');
+        let torrentSection = await this._page.$('section[id="#torrents"]');
         let tableBody = await torrentSection.$('tbody');
         let tableRows = await tableBody.$$("tr");
         for (let row of tableRows) {
@@ -267,7 +271,8 @@ class YggTorrent {
      */
     async downloadTorrent(torrent, downloadPath) {
         // Creating the file
-        let downloadFolder = downloadPath.substring(0,downloadPath.lastIndexOf("\\")+1);
+        downloadPath = downloadPath.replace('\\', '/'); // Windows is weird man
+        let downloadFolder = downloadPath.substring(0,downloadPath.lastIndexOf("/")+1);
         if (!fs.existsSync(downloadFolder)) {
             fs.mkdirSync(downloadFolder, {
                 recursive: true
@@ -275,7 +280,7 @@ class YggTorrent {
         }
         const writeStream = fs.createWriteStream(downloadPath);
         // Get file content
-        let cookies = await this.page.cookies();
+        let cookies = await this._page.cookies();
         let jar = request.jar();
         for (let cookie of cookies) {
             jar.setCookie(`${cookie.name}=${cookie.value}`, this.url);
@@ -291,8 +296,12 @@ class YggTorrent {
         });
     }
 
-    async #initializeBrowser() {
-        this.browser = await puppeteer.launch({
+    async initializeBrowser() {
+        /**
+         * @type { puppeteer.Browser }
+         * @private
+         */
+        this._browser = await puppeteer.launch({
             headless: process.env.DEBUG === "true" ? false : true,
             args: [`--window-size=${1920},${1080}`],
             defaultViewport: {
@@ -300,7 +309,12 @@ class YggTorrent {
                 height:1080
               }
         });
-        this.page = (await this.browser.pages())[0];
+
+        /**
+         * @type { puppeteer.Page }
+         * @private
+         */
+        this._page = (await this._browser.pages())[0];
     }
 
 }
@@ -309,7 +323,10 @@ class YggTorrent {
 module.exports = {
     YggTorrent: YggTorrent,
     Torrent: Torrent,
-    Categories: Categories
+    Categories: Categories,
+    SubCategories: SubCategories,
+    SortBy: SortBy,
+    SortOrder: SortOrder
 }
 
 
