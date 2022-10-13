@@ -1,1 +1,1 @@
-module.exports = requestIdleCallback('./src/yggtorrent.js');
+module.exports = require('./src/yggtorrent.js');
