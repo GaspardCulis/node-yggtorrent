@@ -26,97 +26,90 @@ class Torrent {
     }
 }
 
+class Category {
+
+    /**
+     * 
+     * @param { number } value 
+     * @param { ?Array<Category> } subCategories 
+     */
+    constructor(value, subCategories) {
+        this._value = value;
+        /**
+         * @type { Array<Category> }
+         */
+        this.subCategories = subCategories;
+    }
+}
+
 class YggTorrent {
     /**
-     * @enum { String }
+     * @enum { Category }
      */
-    static category = Object.freeze({
-        ALL: {
-            value:"all",
-            subCategory: Object.freeze({})
-        },
-        FILM_VIDEO: {
-            value: 2145,
-            subCategory: Object.freeze({
-                ALL: "all",
-                ANIMATION: 2178,
-                ANIMATION_SERIES: 2179,
-                CONCERT: 2180,
-                DOCUMENTARY: 2181,
-                TV_SHOW: 2182,
-                FILM: 2183,
-                TV_SERIES: 2184,
-                SHOW: 2185,
-                SPORT: 2186,
-                VIDEO_CLIP: 2187
-            })
-        },
-        AUDIO: {
-            value: 2139,
-            subCategory: Object.freeze({
-                ALL: "all",
-                KARAOKE: 2147,
-                MUSIC: 2148,
-                RADIO_PODCAST: 2150,
-                SAMPLE: 2149
-            })
-        },
-        SOFTWARE: {
-            value: 2144,
-            subCategory: Object.freeze({
-                ALL: "all",
-                OTHER: 2177,
-                FORMATION: 2176,
-                LINUX: 2171,
-                MACOS: 2172,
-                SMARTPHONE: 2174,
-                TABLET: 2175,
-                WINDOWS: 2173
-            })
-        },
-        GAME: {
-            value: 2142,
-            subCategory: Object.freeze({
-                ALL: "all",
-                OTHER: 2167,
-                LINUX: 2159,
-                MACOS: 2160,
-                MICROSOFT: 2162,
-                NINTENDO: 2163,
-                SMARTPHONE: 2165,
-                SNOY: 2164,
-                TABLET: 2166,
-                WINDOWS: 2161
-            })
-        },
-        EBOOK: {
-            value: 2140,
-            subCategory: Object.freeze({
-                ALL: "all",
-                AUDIO: 2151,
-                COMIC_STRIP: 2152,
-                COMICS: 2153,
-                BOOKS: 2154,
-                MANGA: 2155,
-                PRESS: 2156
-            })
-        },
-        EMULATION: {
-            value: 2141,
-            subCategory: Object.freeze({
-                ALL: "all",
-                EMULATORS: 2157,
-                ROMS: 2158
-            })
-        },
-        GPS: {
-            value: 2143,
-            subCategory: Object.freeze({
-                APP: 2168,
-                MAP: 2169,
-                OTHER: 2170
-            })
-        }
+    static categories = Object.freeze({
+        ALL: new Category(0),
+        FILM_VIDEO: new Category(2145, {
+            ALL: new Category(0),
+            ANIMATION: new Category(2178),
+            ANIMATION_SERIES: new Category(2179),
+            CONCERT: new Category(2180),
+            DOCUMENTARY: new Category(2181),
+            TV_SHOW: new Category(2182),
+            FILM: new Category(2183),
+            TV_SERIES: new Category(2184),
+            SHOW: new Category(2185),
+            SPORT: new Category(2186),
+            VIDEO_CLIP: new Category(2187)
+        }),
+        AUDIO: new Category(2139, {
+            ALL: new Category(0),
+            KARAOKE: new Category(2147),
+            MUSIC: new Category(2148),
+            RADIO_PODCAST: new Category(2150),
+            SAMPLE: new Category(2149)
+        }),
+        SOFTWARE: new Category(2144, {
+            ALL: new Category(0),
+            OTHER: new Category(2177),
+            FORMATION: new Category(2176),
+            LINUX: new Category(2171),
+            MACOS: new Category(2172),
+            SMARTPHONE: new Category(2174),
+            TABLET: new Category(2175),
+            WINDOWS: new Category(2173)
+        }),
+        GAME: new Category(2142, {
+            ALL: new Category(0),
+            OTHER: new Category(2167),
+            LINUX: new Category(2159),
+            MACOS: new Category(2160),
+            MICROSOFT: new Category(2162),
+            NINTENDO: new Category(2163),
+            SMARTPHONE: new Category(2165),
+            SNOY: new Category(2164),
+            TABLET: new Category(2166),
+            WINDOWS: new Category(2161)
+        }),
+        EBOOK: new Category(2140, {
+            ALL: new Category(0),
+            AUDIO: new Category(2151),
+            COMIC_STRIP: new Category(2152),
+            COMICS: new Category(2153),
+            BOOKS: new Category(2154),
+            MANGA: new Category(2155),
+            PRESS: new Category(2156)
+        }),
+        EMULATION: new Category(2141, {
+            ALL: new Category(0),
+            EMULATORS: new Category(2157),
+            ROMS: new Category(2158)
+        }),
+        GPS: new Category(2143, {
+            ALL: new Category(0),
+            APP: new Category(2168),
+            MAP: new Category(2169),
+            OTHER: new Category(2170)
+        })
       });
       
 
@@ -174,8 +167,8 @@ class YggTorrent {
     /**
      * @param {Object} query
      * @param {String} query.name
-     * @param {category} query.category
-     * @param {number} query.sub_category
+     * @param { Category } query.category
+     * @param { Category } query.sub_category
      * @param {String} query.description
      * @param {String} query.file
      * @param {String} query.uploader
