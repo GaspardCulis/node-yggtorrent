@@ -1,1 +1,1 @@
-export { default } from "./src/yggtorrent.js";
+module.exports = require('./src/yggtorrent');
