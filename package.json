@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/GaspardCulis/ygg-tv#readme",
   "dependencies": {
-    "puppeteer": "^18.2.1"
+    "node-torrent": "^0.2.2",
+    "puppeteer": "^18.2.1",
+    "webtorrent": "^1.8.32"
   }
 }

@@ -28,25 +28,97 @@ class Torrent {
 
 class YggTorrent {
     /**
-     * @enum { Number | String}
+     * @enum { String }
      */
     static category = Object.freeze({
-        ALL: "all",
-        FILM_VIDEO: 2145,
-        AUDIO: 2139,
-        SOFTWARE: 2144,
-        GAME: 2142,
-        EBOOK: 2140,
-        EMULATION: 2141,
-        GPS: 2143
+        ALL: {
+            value:"all",
+            subCategory: Object.freeze({})
+        },
+        FILM_VIDEO: {
+            value: 2145,
+            subCategory: Object.freeze({
+                ALL: "all",
+                ANIMATION: 2178,
+                ANIMATION_SERIES: 2179,
+                CONCERT: 2180,
+                DOCUMENTARY: 2181,
+                TV_SHOW: 2182,
+                FILM: 2183,
+                TV_SERIES: 2184,
+                SHOW: 2185,
+                SPORT: 2186,
+                VIDEO_CLIP: 2187
+            })
+        },
+        AUDIO: {
+            value: 2139,
+            subCategory: Object.freeze({
+                ALL: "all",
+                KARAOKE: 2147,
+                MUSIC: 2148,
+                RADIO_PODCAST: 2150,
+                SAMPLE: 2149
+            })
+        },
+        SOFTWARE: {
+            value: 2144,
+            subCategory: Object.freeze({
+                ALL: "all",
+                OTHER: 2177,
+                FORMATION: 2176,
+                LINUX: 2171,
+                MACOS: 2172,
+                SMARTPHONE: 2174,
+                TABLET: 2175,
+                WINDOWS: 2173
+            })
+        },
+        GAME: {
+            value: 2142,
+            subCategory: Object.freeze({
+                ALL: "all",
+                OTHER: 2167,
+                LINUX: 2159,
+                MACOS: 2160,
+                MICROSOFT: 2162,
+                NINTENDO: 2163,
+                SMARTPHONE: 2165,
+                SNOY: 2164,
+                TABLET: 2166,
+                WINDOWS: 2161
+            })
+        },
+        EBOOK: {
+            value: 2140,
+            subCategory: Object.freeze({
+                ALL: "all",
+                AUDIO: 2151,
+                COMIC_STRIP: 2152,
+                COMICS: 2153,
+                BOOKS: 2154,
+                MANGA: 2155,
+                PRESS: 2156
+            })
+        },
+        EMULATION: {
+            value: 2141,
+            subCategory: Object.freeze({
+                ALL: "all",
+                EMULATORS: 2157,
+                ROMS: 2158
+            })
+        },
+        GPS: {
+            value: 2143,
+            subCategory: Object.freeze({
+                APP: 2168,
+                MAP: 2169,
+                OTHER: 2170
+            })
+        }
       });
-
-      /**
-       * @enum { Number }
-       */
-      static subCategory = Object.freeze({
-
-      })
+      
 
       /**
       * @enum { String }
