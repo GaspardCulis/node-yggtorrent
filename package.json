@@ -1,24 +1,27 @@
 {
-  "name": "ygg-tv",
+  "name": "node-yggtorrent",
   "version": "1.0.0",
-  "description": "Streaming service based on yygtorrent website",
+  "description": "A modern YggTorrent client for NodeJS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GaspardCulis/ygg-tv.git"
+    "url": "git+https://github.com/GaspardCulis/node-yggtorrent.git"
   },
-  "author": "Gaspard Culis",
+  "keywords": [
+    "yggtorrent",
+    "torrent",
+    "api"
+  ],
+  "author": "GaspardCulis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GaspardCulis/ygg-tv/issues"
+    "url": "https://github.com/GaspardCulis/node-yggtorrent/issues"
   },
-  "homepage": "https://github.com/GaspardCulis/ygg-tv#readme",
+  "homepage": "https://github.com/GaspardCulis/node-yggtorrentv#readme",
   "dependencies": {
-    "node-torrent": "^0.2.2",
-    "puppeteer": "^18.2.1",
-    "webtorrent": "^1.8.32"
+    "puppeteer": "^18.2.1"
   }
 }

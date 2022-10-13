@@ -1,2 +1,2 @@
-# ygg-tv
-Streaming service based on yygtorrent website
+# node-yggtorrent
+A modern YggTorrent client for NodeJS

@@ -1,0 +1,1 @@
+module.exports = requestIdleCallback('./src/yggtorrent.js');

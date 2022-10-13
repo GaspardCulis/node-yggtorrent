@@ -4,10 +4,6 @@ var request = require('request');
 
 require('dotenv').config();
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 class Torrent {
     /**
      * @param {Object} properties
