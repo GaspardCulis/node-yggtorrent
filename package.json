@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/GaspardCulis/node-yggtorrentv#readme",
   "dependencies": {
-    "puppeteer": "^18.2.1"
+    "dotenv": "^16.0.3",
+    "puppeteer": "^18.2.1",
+    "request": "^2.88.2"
   }
 }
