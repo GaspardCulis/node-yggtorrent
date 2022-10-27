@@ -233,6 +233,9 @@ class YggTorrent {
         // Parse results
         let results = [];
         let torrentSection = await this._page.$('section[id="#torrents"]');
+        if (!torrentSection) { // If no results
+            return [];
+        }
         let tableBody = await torrentSection.$('tbody');
         let tableRows = await tableBody.$$("tr");
         for (let row of tableRows) {
