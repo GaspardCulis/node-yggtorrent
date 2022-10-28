@@ -324,6 +324,10 @@ class YggTorrent {
         this._page = (await this._browser.pages())[0];
     }
 
+    async closeBrowser() {
+        await this._browser.close();
+    }
+
 }
 
 
