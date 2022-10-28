@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-var request = require('request');
+const axios = require('axios');
+const path = require('node:path');
 
 require('dotenv').config();
 
@@ -275,7 +276,7 @@ class YggTorrent {
     async downloadTorrent(torrent, downloadPath) {
         // Creating the file
         downloadPath = downloadPath.replace('\\', '/'); // Windows is weird man
-        let downloadFolder = downloadPath.substring(0,downloadPath.lastIndexOf("/")+1);
+        let downloadFolder = path.dirname(downloadPath);
         if (!fs.existsSync(downloadFolder)) {
             fs.mkdirSync(downloadFolder, {
                 recursive: true
@@ -284,18 +285,21 @@ class YggTorrent {
         const writeStream = fs.createWriteStream(downloadPath);
         // Get file content
         let cookies = await this._page.cookies();
-        let jar = request.jar();
+        let cookieString = "";
         for (let cookie of cookies) {
-            jar.setCookie(`${cookie.name}=${cookie.value}`, this.url);
+            cookieString += `${cookie.name}=${cookie.value}; `;
         }
-
+        console.log(cookieString);
+        let response = await axios.get(torrent.downloadUrl, {
+            responseType: 'stream',
+            headers: {
+                Cookie: cookieString
+            }
+        });
+        response.data.pipe(writeStream);
         return new Promise((resolve, reject) => {
-            request({ url: torrent.downloadUrl, jar }, (error, response) => {
-                if (error)
-                    reject(error);
-                else
-                    resolve();
-            }).pipe(writeStream);
+            writeStream.on('finish', resolve);
+            writeStream.on('error', reject);
         });
     }
 
