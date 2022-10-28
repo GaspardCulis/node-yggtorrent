@@ -1,6 +1,6 @@
 {
   "name": "node-yggtorrent",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A modern YggTorrent client for NodeJS",
   "main": "index.js",
   "scripts": {
