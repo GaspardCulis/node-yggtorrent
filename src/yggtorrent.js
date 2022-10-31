@@ -26,7 +26,7 @@ class Torrent {
         /** @type { number } */
         this.id = parseInt(this.url.split('/').pop().split('-')[0]);
         /** @type { String } */
-        this.downloadUrl = YggTorrent.BASE_URL + '/engine/download_torrent?id=' + this.id;
+        this.downloadUrl = YggTorrent.DOWNLOAD_URL + this.id;
         /** @type { Categories } */
         this.category = properties.category;
         /** @type { number } */
@@ -162,6 +162,8 @@ class YggTorrent {
     
     static BASE_URL = "https://www5.yggtorrent.fi";
 
+    static DOWNLOAD_URL = this.BASE_URL + "/engine/download_torrent?id=";
+
     /**
      * @param {Object} params
      * @param {String} params.url The YggTorrent base URL. Defaults to YggTorrent.BASE_URL = https://www5.yggtorrent.fi
@@ -272,7 +274,7 @@ class YggTorrent {
     }
 
     /**
-     * @param { Torrent } torrent 
+     * @param { Torrent | String | Number } torrent The Torrent / torrent download url / Torrent id to download
      * @param { String } downloadPath Example: C:/Users/user/Downloads/file.torrent 
      * @returns { Promise<void> }
      */
@@ -292,7 +294,12 @@ class YggTorrent {
         for (let cookie of cookies) {
             cookieString += `${cookie.name}=${cookie.value}; `;
         }
-        let response = await axios.get(torrent.downloadUrl, {
+
+        const download_url = torrent instanceof Torrent ? torrent.downloadUrl : 
+                                typeof torrent === 'string' ? torrent : 
+                                Number.isInteger(torrent) ? YggTorrent.DOWNLOAD_URL + torrent : 
+                                () => {throw new Error("Invalid type provided for torrent parameter")};
+        let response = await axios.get(download_url, {
             responseType: 'stream',
             headers: {
                 Cookie: cookieString
