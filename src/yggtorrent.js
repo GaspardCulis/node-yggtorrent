@@ -272,6 +272,7 @@ class YggTorrent {
     /**
      * @param { Torrent } torrent 
      * @param { String } downloadPath Example: C:/Users/user/Downloads/file.torrent 
+     * @returns { Promise<void> }
      */
     async downloadTorrent(torrent, downloadPath) {
         // Creating the file
@@ -302,6 +303,9 @@ class YggTorrent {
         });
     }
 
+    /**
+     * @returns { Promise<void> }
+     */
     async initializeBrowser() {
         /**
          * @type { puppeteer.Browser }
@@ -323,6 +327,9 @@ class YggTorrent {
         this._page = (await this._browser.pages())[0];
     }
 
+    /**
+     * @returns { Promise<void> }
+     */
     async closeBrowser() {
         await this._browser.close();
     }
