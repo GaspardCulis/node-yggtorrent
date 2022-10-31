@@ -289,7 +289,6 @@ class YggTorrent {
         for (let cookie of cookies) {
             cookieString += `${cookie.name}=${cookie.value}; `;
         }
-        console.log(cookieString);
         let response = await axios.get(torrent.downloadUrl, {
             responseType: 'stream',
             headers: {
