@@ -23,8 +23,10 @@ class Torrent {
     constructor(properties) {
         /** @type { String } */
         this.url = properties.url;
+        /** @type { number } */
+        this.id = parseInt(this.url.split('/').pop().split('-')[0]);
         /** @type { String } */
-        this.downloadUrl = YggTorrent.BASE_URL + '/engine/download_torrent?id=' + this.url.split('/').pop().split('-')[0];
+        this.downloadUrl = YggTorrent.BASE_URL + '/engine/download_torrent?id=' + this.id;
         /** @type { Categories } */
         this.category = properties.category;
         /** @type { number } */
