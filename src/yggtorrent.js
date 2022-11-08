@@ -202,13 +202,11 @@ class YggTorrent {
      * @returns { Promise<boolean> }
      */
     async isLoggedIn() {
-        if (this._page.url == this.url) {
-            await this._page.goto(this.url, {
-                networkIdleTimeout: 1000,
-                waitUntil: 'networkidle2',
-                timeout: 3000000
-            });
-        }
+        await this._page.goto(this.url, {
+            networkIdleTimeout: 1000,
+            waitUntil: 'networkidle2',
+            timeout: 3000000
+        });
         // Check for button presence
         return await this._page.$('a[id="panel-btn"]') != null;
     }

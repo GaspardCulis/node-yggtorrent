@@ -12,7 +12,7 @@ Features
 ----------------
 * Logging in
 * Searching torrents with a wide variety of filters
-* Downloading torrents
+* Downloading torrents (.torrent files, use [WebTorrent](https://www.npmjs.com/package/webtorrent) to download the actual content)
 
 Usage
 -----
@@ -70,4 +70,27 @@ await client.downloadTorrent(results[0],
     `C:/Users/default/Downloads/${results[0].name}.torrent`
 );
 ```
+Filters
+-------
+There are a lot of filters you can use to search for torrents. Here is an example of all the filters you can use:
+```javascript
+let results = await client.search({
+    name: "The expanse",
+    category: Categories.FILM_VIDEO,
+    sub_category: SubCategories.FILM_VIDEO.TV_SERIES,
+    description: "The expanse",
+    uploader: "Toxic",
+    sort: SortBy.COMPLETED,
+    order: SortOrder.DESCENDING,
+    page: 1,
+    episodes: [6, 9],
+    seasons: [1],
+    extra: [
+        {param: "option_langue:mutiple[]", value: 1}, 
+    ]
+});
+```
+License
+-------
+This project is licensed under the MIT License, I don't know what it does but the name sounds cool.
 
