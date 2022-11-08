@@ -224,16 +224,21 @@ class YggTorrent {
      * @param { SortBy } query.sort
      * @param { SortOrder } query.order
      * @param { String } query.page
+     * @param { null | number[] | 'full' } query.episodes If null, all episodes will be returned. If an array, only the episodes in the array will be returned.
+     * @param { null | number[] | 'full' | 'offSeason' | 'notProvided' } query.seasons If null, all seasons will be returned. If an array, only the seasons in the array will be returned.
+     * @param { {param: string, value: string}[] } query.extra
      * 
      * @returns { Promise<Array<Torrent>> }
      */
     async search(query) {
-        let searchUrl = this.url + `/engine/search?name=${query.name || ""}&description=${query.description || ""}&file=${query.file || ""}&uploader=${query.uploader || ""}&category=${query.category || ''}&sub_category=${query.sub_category || ''}&sort=${query.sort || ""}&order=${query.order || ""}&page=${query.page || ""}&do=search`;
+        if (query.episodes == 'full') query.episodes = [0];
+        if (typeof query.seasons === 'string') query.seasons = [{full: 1, offSeason: 2, notProvided: 3}[query.seasons]];
+        let searchUrl = this.url + `/engine/search?name=${query.name || ""}&description=${query.description || ""}&file=${query.file || ""}&uploader=${query.uploader || ""}&category=${query.category || ''}&sub_category=${query.sub_category || ''}&sort=${query.sort || ""}&order=${query.order || ""}&page=${query.page || ""}${(query.episodes || []).map(e => `&option_episode[]=${e+1}`).join('')}${(query.seasons || []).map(s => `&option_saison[]=${s+3}`).join('')}${query.extra ? query.extra.map(e => `&${e.param}=${e.value}`).join("") : ""}&do=search`;
 
-        await this._page.goto(searchUrl, {
+        await this._page.goto(encodeURI(searchUrl), {
             networkIdleTimeout: 1000,
             waitUntil: 'networkidle2',
-            timeout: 3000000
+            timeout: 60000
         });
         // Parse results
         let results = [];
