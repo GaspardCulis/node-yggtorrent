@@ -27,5 +27,8 @@
     "puppeteer": "^18.2.1",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
 }
