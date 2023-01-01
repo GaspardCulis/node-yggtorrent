@@ -160,7 +160,7 @@ const SortOrder = Object.freeze({
 
 class YggTorrent {
     
-    static BASE_URL = "https://www5.yggtorrent.fi";
+    static BASE_URL = "https://yggtorrent.lol";
 
     static DOWNLOAD_URL = this.BASE_URL + "/engine/download_torrent?id=";
 
@@ -186,7 +186,7 @@ class YggTorrent {
         await this._page.goto(this.url, {
             networkIdleTimeout: 1000,
             waitUntil: 'networkidle2',
-            timeout: 3000000
+            timeout: 3000
         });
         await this._page.click('a[id="register"]');
         let form = await this._page.$('form[id="user-login"]');
@@ -325,7 +325,7 @@ class YggTorrent {
          */
         this._browser = await puppeteer.launch({
             headless: process.env.DEBUG === "true" ? false : true,
-            args: [`--window-size=${1920},${1080}`],
+            args: [`--window-size=${1920},${1080}`, '--no-sandbox'],
             defaultViewport: {
                 width:1920,
                 height:1080
