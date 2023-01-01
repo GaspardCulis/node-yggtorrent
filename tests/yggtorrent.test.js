@@ -9,6 +9,8 @@ afterEach(async () => {
     await y.closeBrowser();
 });
 
+jest.setTimeout(30000);
+
 test('search fight club', async () => {
     let results = await y.search({
         name: 'fight club',
