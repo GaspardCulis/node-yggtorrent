@@ -1,4 +1,7 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
 const fs = require('fs');
 const axios = require('axios');
 const path = require('node:path');
@@ -337,6 +340,17 @@ class YggTorrent {
          * @private
          */
         this._page = (await this._browser.pages())[0];
+        
+        await this._page.goto(YggTorrent.BASE_URL, {
+            networkIdleTimeout: 1000,
+            waitUntil: 'networkidle2',
+            timeout: 60000
+        })
+        await this._page.waitForFunction('document.title.startsWith("YggTorrent")', {
+            timeout: 10000
+        }).catch(() => {
+            throw new Error("Failed to connect to YggTorrent, might be because of Cloudflare");
+        });
     }
 
     /**
