@@ -160,7 +160,7 @@ const SortOrder = Object.freeze({
 
 class YggTorrent {
     
-    static BASE_URL = "https://yggtorrent.lol";
+    static BASE_URL = "https://www6.yggtorrent.lol";
 
     static DOWNLOAD_URL = this.BASE_URL + "/engine/download_torrent?id=";
 
