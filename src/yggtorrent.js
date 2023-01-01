@@ -347,8 +347,8 @@ class YggTorrent {
             timeout: 60000
         })
         await this._page.waitForFunction('document.title.startsWith("YggTorrent")', {
-            timeout: 10000
-        }).catch(() => {
+            timeout: 20000
+        }).catch(async() => {
             throw new Error("Failed to connect to YggTorrent, might be because of Cloudflare");
         });
     }
